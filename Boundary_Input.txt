@@ -1,0 +1,23 @@
+----------- BOUNDARIES -----------
+Defined as straight lines between two points (x1,y1) and (x2,y2).
+The lines need to be horizontal or vertical.
+The points need to be ordered from bottom to top or left to right.
+Format: ( x1 y1; x2 y2; +/- ) boundaryName
+-> the (-) or (+) indicates whether the boundary elements are located on a positive or negative increment perpendicular to the boundary line. There needs to be a space between the sign and closing ')'. Any thing other than (+) or (-) will give an error
+----------------------------------
+
+( 0 0; 0 10; + ) Front
+
+( 10 0; 10 10; - ) Back
+
+( 0 10; 10 10; - ) Top
+
+( 0 0; 10 0; + ) Bottom
+
+( 2.0 2.0; 2.0 3.0; - ) Obj_Front
+
+( 6.0 2.0; 6.0 3.0; + ) Obj_Back
+
+( 2.0 3.0; 6.0 3.0; + ) Obj_Top
+
+( 2.0 2.0; 6.0 2.0; - ) Obj_Bottom

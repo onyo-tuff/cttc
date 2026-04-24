@@ -1,0 +1,19 @@
+----------- SOLVER SELECTION -----------
+Available options:
+	> Jacobi
+	> Gauss-Seidel
+	> SOR (Successive Over-Relaxation)
+	> Conjugate Gradient
+	> PCG (Preconditioned Conjugate Gradient)
+		> Diagonal Precon
+		> Gauss-Seidel Precon
+----------------------------------------
+
+Solver to use:
+Gauss-Seidel
+
+Relaxation factor 'omega' (if necessary):
+1.5
+
+Preconditioning Scheme (for PCG):
+Gauss-Seidel Precon
