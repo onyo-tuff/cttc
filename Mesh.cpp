@@ -161,6 +161,7 @@ Mesh::Mesh() {
     buildIdentifiers(false);
     N_vol = N*M;
     N_obstacle = 0;
+    AssignMaterials();
 }
 
 void Mesh::Build() {
@@ -179,6 +180,7 @@ Mesh::Mesh(bool rectangle) {
     buildVyMesh();
     buildIdentifiers(true);
     N_vol = N*M;
+    AssignMaterials();
 }
 
 void Mesh::Build1() {
@@ -613,3 +615,80 @@ void Mesh::buildVxVyIds(double x1, double y1, double x2, double y2, std::string 
         }
     }
 }
+
+void Mesh::AssignMaterials() {
+	std::vector<std::vector<double>> MaterialKData;
+	std::vector<double> data;
+	bool read=false;
+	double x, y, x1, y1, x2, y2, k;
+	//Read the input file and save the data
+    while (Materials_Input >> strInput) {
+        if (strInput == "---------------------------------------------------") 
+            read = true;
+        if (strInput == "(" && read) {
+            Materials_Input >> strInput;
+            x1 = std::stod(strInput);
+            Materials_Input >> strInput;
+            y1 = std::stod(strInput);
+            Materials_Input >> strInput;
+            x2 = std::stod(strInput);
+            Materials_Input >> strInput;
+            y2 = std::stod(strInput);
+            Materials_Input >> strInput;
+            Materials_Input >> strInput;
+            k = std::stod(strInput);
+            MaterialKData.push_back({x1, y1, x2, y2, k});
+        }
+    }
+    //Sweep through all the volumes and assign the corresponding k
+    for (int n = 0; n < N_vol; n++) {
+    	x = getCenter(n)[0];
+    	y = getCenter(n)[1];
+    	MaterialK.push_back(1);
+    	for (size_t k = 0; k < MaterialKData.size(); k++) {
+    		data = MaterialKData[k];
+    		if ( x>=data[0] && x<=data[2] && y>=data[1] && y<=data[3] )
+    			MaterialK[n] = data[4];
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

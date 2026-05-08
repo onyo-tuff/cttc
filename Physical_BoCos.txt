@@ -8,12 +8,12 @@ For Neumann: scalarValue is the x/y component of the gradient (according to the 
 ----------------------------------
 
 Front:
-Dirichlet
-40
+Neumann
+-100
 
 Back:
 Dirichlet
-10
+28
 
 Top:
 Dirichlet
@@ -21,7 +21,7 @@ Dirichlet
 
 Bottom:
 Dirichlet
-20
+23
 
 Obj_Front:
 Neumann

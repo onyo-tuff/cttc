@@ -28,47 +28,47 @@ For the case without the obstacle, only one region is considered,
 and only the parameters corresponding to x1 & y1 are used to discretize the domain.
 
 Domain Width 'L' (m):
-10
+1.1
 Domain Height 'H' (m):
-10
+0.8
 
 Coordinates of the bottom-left corner of the obstacle:
 x_r (m):
-8
+0
 y_r (m):
-8
+0
 Width of the obstacle 'L_r' (m):
-2
+0
 Height of the obstacle 'H_r' (m):
-2
+0
 
 ----------- DISCRETIZATION PARAMETERS -----------
 
 Minimum horizontal element size 'hx_min' (m):
-0.05
+0.011
 Maximum horizontal element size for x1 'hx_max1' (m):
-0.1
+0.11
 Maximum horizontal element size for x2 'hx_max2' (m):
-1
+2
 Maximum horizontal element size for x3 'hx_max3' (m):
-1
+2
 Minimum vertical element size 'hy_min' (m):
-0.05
+0.008
 Maximum vertical element size for y1 'hy_max1' (m):
-0.1
+0.08
 Maximum vertical element size for y2 'hy_max2' (m):
-1
+2
 Maximum vertical element size for y3 'hy_max3' (m):
-1
+2
 
 Transition smoothness parameter along x1 'alpha_x1':
-0.5
+0.2
 Transition smoothness parameter along x2 'alpha_x2':
 0
 Transition smoothness parameter along x3 'alpha_x3':
 0
 Transition smoothness parameter along y1 'alpha_y1':
-0.5
+0.2
 Transition smoothness parameter along y2 'alpha_y2':
 0
 Transition smoothness parameter along y3 'alpha_y3':
@@ -76,4 +76,13 @@ Transition smoothness parameter along y3 'alpha_y3':
 -> To set uniform discretization for a desired region, set its corresponding alpha=0
 -> The h used will be the minimum of hx_min and hy_min, and will be reduced if necessary
    to fit an integer amount of control volumes
+
+
+
+
+
+
+
+
+
 

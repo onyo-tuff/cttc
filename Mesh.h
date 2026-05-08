@@ -21,6 +21,7 @@ public:
 	std::vector<int> ij_given_n(int n); // Indices de la malla colocada
 	// Primary mesh
 	 // - access with node number
+	double getK(int n) { return MaterialK[n]; }
 	std::vector<double> getCenter(int n) { return Coords[n][0]; }
 	std::vector<double> getWest(int n) { return Coords[n][1]; }
 	std::vector<double> getEast(int n) { return Coords[n][2]; }
@@ -71,6 +72,7 @@ private:
 	// Members
 	std::ifstream input{ "Mesh_Input.txt" };
 	std::ifstream Boundary_Input{ "Boundary_Input.txt"};
+	std::ifstream Materials_Input{ "Materials_Input.txt"};
 	std::string strInput;
 	double L, H, hx_min, hx_max1, hx_max2, hx_max3, hy_min, hy_max1, hy_max2, hy_max3, 
 		alpha_x1, alpha_x2, alpha_x3, alpha_y1, alpha_y2, alpha_y3, x_r, y_r, L_r, H_r;
@@ -82,6 +84,7 @@ private:
 	std::vector<std::vector<int>> Connect; // n_nod x 2
 	std::vector<std::vector<double>> Vols_n_Surfaces; // n_nod x 5
 	std::vector<std::vector<std::vector<double>>> Coords; // n_nod x 5 x 2
+	std::vector<double> MaterialK; // Gives material for each node
 	//std::vector<std::vector<std::string>> Identif;
 	// For Vx mesh
 	std::vector<std::vector<std::vector<double>>> Coords_Vx;
@@ -113,6 +116,7 @@ private:
 	void buildVxMesh();
 	void buildVyMesh();
 	void buildVxVyIds(double x1, double y1, double x2, double y2, std::string name);
+	void AssignMaterials();
 };
 
 

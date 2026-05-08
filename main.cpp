@@ -15,6 +15,7 @@ int main() {
 	std::cout << mesh.N_vol << "\n";
 	//a = mesh.hasIdentifier(n, "Obj_Bottom");
 	Laplacian Lap(mesh);
+	//std::cout << mesh.MaterialK.size() << "\n";
 	std::cout << "laplacian ok" << "\n";
 
 
@@ -23,6 +24,14 @@ int main() {
 	SparseMatrix A;
 	b = Lap.OprB();
 	A = Lap.OprA();
+	
+	//for (size_t i = 0; i < b.size(); i++) {
+	//	for (size_t j = 0; j < b.size(); j++) {
+	//		std::cout << A.getEntry(i,j) << " ";
+	//	}
+	//	std::cout << "\n";
+	//}
+	
 	//std::cout << Lap.vBound_Type[0] << "\n";
 	//std::cout << Lap.vBound_Type[1] << "\n";
 	//std::cout << Lap.vBound_Type[2] << "\n";

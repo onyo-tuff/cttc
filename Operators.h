@@ -16,7 +16,9 @@ public:
 	SparseMatrix OprA() { return A; }
 	std::vector<double> OprB() { return b; }
 
-public:
+private:
+	double kWall(Mesh& mesh, int n, int p);
+	double dist(std::vector<double> a, std::vector<double> b);
 	void calc_boundary(Mesh& mesh, int n);
 	int k;
 	double aP, aE, aW, aN, aS, bP;
