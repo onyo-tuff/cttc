@@ -24,9 +24,6 @@ Laplacian::Laplacian(Mesh& mesh)
 			aS = mesh.getS_s(n)/(mesh.getCenter(n)[1]-mesh.getSouth(n)[1]);
 		if (!mesh.hasIdentifier(n,"Top") && !mesh.hasIdentifier(n,"Obj_Bottom"))
 			aN = mesh.getS_n(n)/(mesh.getNorth(n)[1]-mesh.getCenter(n)[1]);
-		// For volumes inside the obstacle
-		if (mesh.hasIdentifier(n,"Obstacle"))
-			k++;
 		// For boundary volumes
 		calc_boundary(mesh, n);
 		// 
@@ -45,7 +42,7 @@ Laplacian::Laplacian(Mesh& mesh)
 		}
 	}
 	// Check for zeros in diagonal
-	for (int i = 0; i < b.size(); i++) {
+	for (size_t i = 0; i < b.size(); i++) {
 		if (A.getEntry(i,i) == 0)
 			std::cout << "zero in diagonal " << i << "!" << "\n";
 	}

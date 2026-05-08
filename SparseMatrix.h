@@ -17,9 +17,9 @@ public:
 
 private:
 	// Members
+	int N;
 	std::vector<std::vector<double>> L;
 	std::vector<std::vector<int>> Ids;
-	int N;
 
 	// Private Member Functions
 

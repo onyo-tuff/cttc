@@ -47,10 +47,10 @@ int main() {
 	//}
 	//std::cout << "\n";
 	//std::cout << "diag(A):" << "\n";
-	for (int i = 0; i < b.size(); i++) {
-		std::cout << A.getEntry(i,i) << ", ";
-	}
-	std::cout << "\n";
+	//for (int i = 0; i < b.size(); i++) {
+	//	std::cout << A.getEntry(i,i) << ", ";
+	//}
+	//std::cout << "\n";
 
 	// Solucionar
 	Solver sol(A, b);
@@ -73,7 +73,7 @@ int main() {
 	N = mesh.getN();
 	M = mesh.getM();
 	std::vector<std::vector<double>> x2D(N, std::vector<double>(M));
-	for (int n = 0; n < b.size(); n++) {
+	for (size_t n = 0; n < b.size(); n++) {
 		i = (int)(n / M);
 		j = n - i * M;
 		x2D[i][j] = x[n];

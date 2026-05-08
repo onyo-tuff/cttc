@@ -3,7 +3,7 @@
 double SparseMatrix::getEntry(int i, int j) {
 	std::vector<double> a = L[i];
 	std::vector<int> ids = Ids[i];
-	int n = (int)a.size();
+	int n = a.size();
 	for (int k = 0; k < n; k++) {
 		if (ids[k] == j) {
 			return a[k];

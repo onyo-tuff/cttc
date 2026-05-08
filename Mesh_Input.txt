@@ -30,7 +30,7 @@ and only the parameters corresponding to x1 & y1 are used to discretize the doma
 Domain Width 'L' (m):
 10
 Domain Height 'H' (m):
-4
+10
 
 Coordinates of the bottom-left corner of the obstacle:
 x_r (m):

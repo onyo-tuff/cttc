@@ -169,7 +169,6 @@ void SOR::solve() {
 
 //---------- Conjugate Gradient Solver ----------
 void CG::solve() {
-	bool iterate = true;
 	// Initial setup
 	r_guess = subtractVects(b,MatrixVec_prod(A,x_guess));
 	v = r_guess;
@@ -191,7 +190,6 @@ void CG::solve() {
 
 //---------- Preconditioned Conjugate Gradient ----------
 void PCG::solve() {
-	bool iterate = true;
 	// Initial setup
 	r_guess = subtractVects(b,MatrixVec_prod(A,x_guess));
 	z_guess = precondition(r_guess);

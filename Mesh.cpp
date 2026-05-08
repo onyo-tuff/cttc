@@ -112,7 +112,7 @@ std::vector<double> Mesh::Discretize(double h_min, double h_max, double alpha, d
             x.push_back(h_min*n);
         }
         k = L/x.back();
-        for (int i = 0; i < x.size(); i++) { x[i] =k*x[i]; }
+        for (size_t i = 0; i < x.size(); i++) { x[i] =k*x[i]; }
     }
     else {
         while (x.back() < L/2) {
@@ -120,13 +120,13 @@ std::vector<double> Mesh::Discretize(double h_min, double h_max, double alpha, d
             x.push_back(x.back() + h);
         }
         k = 0.5*L/x.back();
-        for (int i = 0; i < x.size(); i++) { x[i] = k*x[i]; }
+        for (size_t i = 0; i < x.size(); i++) { x[i] = k*x[i]; }
         std::vector<double> aux = x;
         aux.pop_back();
-        for (int i = 0; i < aux.size(); i++) { aux[i] = L - x[i]; }
+        for (size_t i = 0; i < aux.size(); i++) { aux[i] = L - x[i]; }
         std::reverse(aux.begin(), aux.end());
         x.insert(x.end(), aux.begin(), aux.end());
-        for (int i = 0; i < x.size(); i++) { x[i] = x0 + (xf-x0)/L*x[i]; }
+        for (size_t i = 0; i < x.size(); i++) { x[i] = x0 + (xf-x0)/L*x[i]; }
     }
     return x;
 }
@@ -143,7 +143,7 @@ std::vector<double> Mesh::Discretize1(double h_min, double h_max, double alpha, 
             x.push_back(x.back() + h);
         }
         k = L/x.back();
-        for (int i=0; i < x.size(); i++) { 
+        for (size_t i=0; i < x.size(); i++) { 
             x[i] = x0 + (xf-x0)/L*k*x[i]; 
         }
     }
@@ -352,7 +352,7 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
             Boundary_Input >> name;
             elems = findBoundaryElems(x1,y1,x2,y2,incr);
             buildVxVyIds(x1, y1, x2, y2, name);
-            for (int i=0; i<elems.size(); i++) { 
+            for (size_t i=0; i<elems.size(); i++) { 
                 if (Identif[elems[i]][0] == "Interior")
                     Identif[elems[i]][0] = name;
                 else
@@ -471,8 +471,8 @@ std::vector<int> Mesh::findBoundaryElems(double x1, double y1, double x2, double
         }   
     }
     // Find elements corresponding to the boundary delimited by the x1,y1,x2,y2 given
-    for (int a = 0; a < i_bound.size(); a++) {
-        for (int b = 0; b < j_bound.size(); b++) {
+    for (size_t a = 0; a < i_bound.size(); a++) {
+        for (size_t b = 0; b < j_bound.size(); b++) {
             elems.push_back( node_number( i_bound[a], j_bound[b]));
         }
     }
@@ -483,7 +483,7 @@ bool Mesh::hasIdentifier(int i, int j, std::string Id) {
     bool has = false;
     int n;
     n = node_number(i,j);
-    for (int k = 0; k < Identif[n].size(); k++) {
+    for (size_t k = 0; k < Identif[n].size(); k++) {
         if (Identif[n][k] == Id) { has = true; }
     }
     return has;
@@ -491,7 +491,7 @@ bool Mesh::hasIdentifier(int i, int j, std::string Id) {
 
 bool Mesh::hasIdentifier(int n, std::string Id) {
     bool has = false;
-    for (int k = 0; k < Identif[n].size(); k++) {
+    for (size_t k = 0; k < Identif[n].size(); k++) {
         if (Identif[n][k] == Id) { has = true; }
     }
     return has;
@@ -605,7 +605,7 @@ void Mesh::buildVxVyIds(double x1, double y1, double x2, double y2, std::string 
         dist1 = std::abs(x_coords[i]-x2);
         while (!stop) {
             i++;
-            dist2 = std::abs(x_coords[j]-x2);
+            dist2 = std::abs(x_coords[i]-x2);
             if (i==N) { VyMesh_Ids[i][j] = name; stop = true;}
             if (dist2>dist1) { stop = true; }
             else { VyMesh_Ids[i][j] = name; }
