@@ -16,4 +16,4 @@ Relaxation factor 'omega' (if necessary):
 1.5
 
 Preconditioning Scheme (for PCG):
-Gauss-Seidel Precon
+Diagonal Precon

@@ -104,52 +104,50 @@ private:
 };
 
 //Preconditioned Conjugate Gradient 
-//class PCG : public SolverBase 
-//{
-//public:
+class PCG : public SolverBase 
+{
+public:
 	// Constructor
-//	PCG(SparseMatrix in_A, std::vector<double> in_b)
-//		: SolverBase{ in_A, in_b }
-//	{
-//	}
-//	virtual void solve();
+	PCG(SparseMatrix in_A, std::vector<double> in_b)
+		: SolverBase{ in_A, in_b }
+	{
+	}
+	virtual void solve();
 
-//protected:
-//	virtual std::vector<double> precondition(std::vector<double> r) {
-//		return r; 
-//	}
-//	std::vector<double> r, r_guess, v, z, z_guess;
-//	double s_k, t_k;
-//};
+protected:
+	virtual void precondition() { z=r; }
+	std::vector<double> r, r_guess, v, z, z_guess;
+	double s_k, t_k;
+};
  //> For diagonal preconditioner
-//class DiagPCG : public PCG 
-//{
-//public:
-	// Constructor
-//	DiagPCG(SparseMatrix in_A, std::vector<double> in_b)
-//		: PCG{ in_A, in_b }
-//	{
-//		buildDiag();
-//	}
+class DiagPCG : public PCG 
+{
+public:
+	//Constructor
+	DiagPCG(SparseMatrix in_A, std::vector<double> in_b)
+		: PCG{ in_A, in_b }
+	{
+		buildDiag();
+	}
 
-//protected:
-//	virtual std::vector<double> precondition(std::vector<double> r);
-//	void buildDiag();
-//	std::vector<double> diag;
-//};
+protected:
+	virtual void precondition();
+	void buildDiag();
+	std::vector<double> diag;
+};
  //> For Gauss-Seidel preconditioner
-//class GS_PCG : public PCG 
-//{
-//public:
-	// Constructor
-//	GS_PCG(SparseMatrix in_A, std::vector<double> in_b)
-//		: PCG{ in_A, in_b }
-//	{
-//	}
+class GS_PCG : public PCG 
+{
+public:
+	//Constructor
+	GS_PCG(SparseMatrix in_A, std::vector<double> in_b)
+		: PCG{ in_A, in_b }
+	{
+	}
 
-//protected:
-//	virtual std::vector<double> precondition(std::vector<double> r);
-//};
+protected:
+	virtual void precondition();
+};
 
 
 
