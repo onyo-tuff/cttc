@@ -169,17 +169,6 @@ void SOR::solve() {
 
 //---------- Conjugate Gradient Solver ----------
 void CG::solve() {
-	// Check Symmetry
-	double diff;
-	for (int i = 0; i < N; i++) {
-		for (int j = 0; j < N; j++) {
-			//diff = std::abs(A.getEntry(i,j)-A.getEntry(j,i))/std::abs(A.getEntry(i,j));
-			//if (diff>0.01) {
-			//	std::cout<<"Not symmetric!!!! " << i << " , " << j << "\n"; }
-			std::cout << A.getEntry(i,j) << " ";
-		}
-		std::cout << "\n";
-	}
 	// Local varriables
 	r = b;
 	r_guess = r;
