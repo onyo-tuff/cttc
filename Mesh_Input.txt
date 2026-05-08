@@ -34,41 +34,41 @@ Domain Height 'H' (m):
 
 Coordinates of the bottom-left corner of the obstacle:
 x_r (m):
-2.0
+8
 y_r (m):
-2.0
+8
 Width of the obstacle 'L_r' (m):
-4.0
+2
 Height of the obstacle 'H_r' (m):
-1.0
+2
 
 ----------- DISCRETIZATION PARAMETERS -----------
 
 Minimum horizontal element size 'hx_min' (m):
-0.1
+2
 Maximum horizontal element size for x1 'hx_max1' (m):
-1
+2
 Maximum horizontal element size for x2 'hx_max2' (m):
-1
+2
 Maximum horizontal element size for x3 'hx_max3' (m):
-1
+2
 Minimum vertical element size 'hy_min' (m):
-0.1
+2
 Maximum vertical element size for y1 'hy_max1' (m):
-1
+2
 Maximum vertical element size for y2 'hy_max2' (m):
-1
+2
 Maximum vertical element size for y3 'hy_max3' (m):
-1
+2
 
 Transition smoothness parameter along x1 'alpha_x1':
-0.5
+0
 Transition smoothness parameter along x2 'alpha_x2':
 0
 Transition smoothness parameter along x3 'alpha_x3':
 0
 Transition smoothness parameter along y1 'alpha_y1':
-0.5
+0
 Transition smoothness parameter along y2 'alpha_y2':
 0
 Transition smoothness parameter along y3 'alpha_y3':

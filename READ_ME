@@ -1,0 +1,28 @@
+////////////////////////////////Mesh_Input.txt////////////////////////////////////////////
+Mesh indexing:
+	i: 0->N-1 from left to right
+	j: 0->M-1 from bottom to top
+	n = i*M + j
+
+
+////////////////////////////////Boundary_Input.txt////////////////////////////////////////////
+The boundaries of the domain must be named:
+	> Front
+	> Back
+	> Top 
+	> Bottom
+The boundaries of the obstacle must be named:
+	> Obj_Front
+	> Obj_Back
+	> Obj_Top
+	> Obj_Bottom
+	(!) The obstacle boundaries must be removed when using the case without obstacle
+	
+Current limitation(!!!!!!): The Boundary Input format is designed so that any custom boundaries can be set. However, the operators functionality only works with the pre-set names listed above
+		
+////////////////////////////////Physical_BoCos.txt////////////////////////////////////////////
+Assigns a type of boundary condition (Dirichlet or Neumann) to the boundaries defined in Boundary_Input.txt
+
+////////////////////////////////SOlver_Input.txt////////////////////////////////////////////
+Selects a solver to use
+

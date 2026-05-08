@@ -14,10 +14,3 @@ Format: ( x1 y1; x2 y2; +/- ) boundaryName
 
 ( 0 0; 10 0; + ) Bottom
 
-( 2.0 2.0; 2.0 3.0; - ) Obj_Front
-
-( 6.0 2.0; 6.0 3.0; + ) Obj_Back
-
-( 2.0 3.0; 6.0 3.0; + ) Obj_Top
-
-( 2.0 2.0; 6.0 2.0; - ) Obj_Bottom

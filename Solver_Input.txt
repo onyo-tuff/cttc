@@ -10,7 +10,7 @@ Available options:
 ----------------------------------------
 
 Solver to use:
-Jacobi
+Conjugate Gradient
 
 Relaxation factor 'omega' (if necessary):
 1.5

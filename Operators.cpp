@@ -3,6 +3,8 @@
 Laplacian::Laplacian(Mesh& mesh)
 	: A(mesh.N_vol-mesh.N_obstacle), b(mesh.N_vol-mesh.N_obstacle), vBound_Value(8), vBound_Type(8)
 {
+	int N = mesh.N;
+	int M = mesh.M;
 	getInputs();
 	k = 0;
 	for (int n = 0; n < mesh.N_vol; n++) {
@@ -17,13 +19,13 @@ Laplacian::Laplacian(Mesh& mesh)
 		bP = 0;
 		// For all the inner volumes
 		if (!mesh.hasIdentifier(n,"Front") && !mesh.hasIdentifier(n,"Obj_Back"))
-			aW = mesh.getS_w(n)/(mesh.getCenter(n)[0]-mesh.getWest(n)[0]);
+			aW = mesh.getS_w(n)/(mesh.getCenter(n)[0]-mesh.getCenter(n-M)[0]);
 		if (!mesh.hasIdentifier(n,"Back") && !mesh.hasIdentifier(n,"Obj_Front"))
-			aE = mesh.getS_e(n)/(mesh.getEast(n)[0]-mesh.getCenter(n)[0]);
+			aE = mesh.getS_e(n)/(mesh.getCenter(n+M)[0]-mesh.getCenter(n)[0]);
 		if (!mesh.hasIdentifier(n,"Bottom") && !mesh.hasIdentifier(n,"Obj_Top"))
-			aS = mesh.getS_s(n)/(mesh.getCenter(n)[1]-mesh.getSouth(n)[1]);
+			aS = mesh.getS_s(n)/(mesh.getCenter(n)[1]-mesh.getCenter(n-1)[1]);
 		if (!mesh.hasIdentifier(n,"Top") && !mesh.hasIdentifier(n,"Obj_Bottom"))
-			aN = mesh.getS_n(n)/(mesh.getNorth(n)[1]-mesh.getCenter(n)[1]);
+			aN = mesh.getS_n(n)/(mesh.getCenter(n+1)[1]-mesh.getCenter(n)[1]);
 		// For boundary volumes
 		calc_boundary(mesh, n);
 		// 
@@ -31,9 +33,9 @@ Laplacian::Laplacian(Mesh& mesh)
 
 		A.writeEntry(n-k,n-k,aP);
 		if (aW!=0)
-			A.writeEntry(n-k,n-mesh.M-k,aW);
+			A.writeEntry(n-k,n-M-k,aW);
 		if (aE!=0)
-			A.writeEntry(n-k,n+mesh.M-k,aE);
+			A.writeEntry(n-k,n+M-k,aE);
 		if (aS!=0)
 			A.writeEntry(n-k,n-1-k,aS);
 		if (aN!=0)
@@ -51,7 +53,7 @@ Laplacian::Laplacian(Mesh& mesh)
 void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	if (mesh.hasIdentifier(n,"Front")) {
 		if (vBound_Type[0]=="Dirichlet") {
-			aP += -2*mesh.getS_w(n)/mesh.getS_n(n);
+			aP += -mesh.getS_w(n)/std::abs(mesh.getCenter(n)[0]-mesh.getWest(n)[0]);
 			bP += vBound_Value[0]*aP;
 		}
 		else if (vBound_Type[0]=="Neumann") 
@@ -61,7 +63,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Back")) {
 		if (vBound_Type[1]=="Dirichlet") {
-			aP += -2*mesh.getS_e(n)/mesh.getS_n(n);
+			aP += -mesh.getS_e(n)/std::abs(mesh.getCenter(n)[0]-mesh.getEast(n)[0]);
 			bP += vBound_Value[1]*aP;
 		}
 		else if (vBound_Type[1]=="Neumann") 
@@ -71,7 +73,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Top")) {
 		if (vBound_Type[2]=="Dirichlet") {
-			aP += -2*mesh.getS_n(n)/mesh.getS_w(n);
+			aP += -mesh.getS_n(n)/std::abs(mesh.getCenter(n)[1]-mesh.getNorth(n)[1]);
 			bP += vBound_Value[2]*aP;
 		}
 		else if (vBound_Type[2]=="Neumann") 
@@ -81,7 +83,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Bottom")) {
 		if (vBound_Type[3]=="Dirichlet") {
-			aP += -2*mesh.getS_s(n)/mesh.getS_w(n);
+			aP += -mesh.getS_s(n)/std::abs(mesh.getCenter(n)[1]-mesh.getSouth(n)[1]);
 			bP += vBound_Value[3]*aP;
 		}
 		else if (vBound_Type[3]=="Neumann") 
@@ -91,7 +93,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Obj_Front")) {
 		if (vBound_Type[4]=="Dirichlet") {
-			aP += -2*mesh.getS_e(n)/mesh.getS_n(n);
+			aP += -mesh.getS_e(n)/std::abs(mesh.getCenter(n)[0]-mesh.getEast(n)[0]);
 			bP += vBound_Value[4]*aP;
 		}
 		else if (vBound_Type[4]=="Neumann") 
@@ -101,7 +103,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Obj_Back")) {
 		if (vBound_Type[5]=="Dirichlet") {
-			aP += -2*mesh.getS_w(n)/mesh.getS_n(n);
+			aP += -mesh.getS_w(n)/std::abs(mesh.getCenter(n)[0]-mesh.getWest(n)[0]);
 			bP += vBound_Value[5]*aP;
 		}
 		else if (vBound_Type[5]=="Neumann") 
@@ -111,7 +113,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Obj_Top")) {
 		if (vBound_Type[6]=="Dirichlet") {
-			aP += -2*mesh.getS_s(n)/mesh.getS_w(n);
+			aP += -mesh.getS_s(n)/std::abs(mesh.getCenter(n)[1]-mesh.getSouth(n)[1]);
 			bP += vBound_Value[6]*aP;
 		}
 		else if (vBound_Type[6]=="Neumann") 
@@ -121,7 +123,7 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 	if (mesh.hasIdentifier(n,"Obj_Bottom")) {
 		if (vBound_Type[7]=="Dirichlet") {
-			aP += -2*mesh.getS_n(n)/mesh.getS_w(n);
+			aP += -mesh.getS_n(n)/std::abs(mesh.getCenter(n)[1]-mesh.getNorth(n)[1]);
 			bP += vBound_Value[7]*aP;
 		}
 		else if (vBound_Type[7]=="Neumann") 

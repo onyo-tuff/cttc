@@ -64,6 +64,8 @@ public:
 
 	// Public members
 	int N, N1, N2, N3, M, M1, M2, M3, N_vol, N_obstacle;
+	
+	std::vector<std::vector<std::string>> Identif;
 
 private:
 	// Members
@@ -80,7 +82,7 @@ private:
 	std::vector<std::vector<int>> Connect; // n_nod x 2
 	std::vector<std::vector<double>> Vols_n_Surfaces; // n_nod x 5
 	std::vector<std::vector<std::vector<double>>> Coords; // n_nod x 5 x 2
-	std::vector<std::vector<std::string>> Identif;
+	//std::vector<std::vector<std::string>> Identif;
 	// For Vx mesh
 	std::vector<std::vector<std::vector<double>>> Coords_Vx;
 	std::vector<std::vector<std::vector<double>>> SnV_Vx;
