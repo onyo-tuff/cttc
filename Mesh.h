@@ -112,7 +112,7 @@ private:
 	std::vector<double> North(int i, int j);
 	void buildArrays();
 	void buildIdentifiers(bool yesObstacle);
-	std::vector<int> findBoundaryElems(double x1, double y1, double x2, double y2, std::string incr);
+	std::vector<int> findBoundaryElems(double x1, double y1, double x2, double y2, std::string type);
 	void buildVxMesh();
 	void buildVyMesh();
 	void buildVxVyIds(double x1, double y1, double x2, double y2, std::string name);

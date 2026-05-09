@@ -25,6 +25,7 @@ int main() {
 	b = Lap.OprB();
 	A = Lap.OprA();
 	
+	//std::cout << "A = " << "\n";
 	//for (size_t i = 0; i < b.size(); i++) {
 	//	for (size_t j = 0; j < b.size(); j++) {
 	//		std::cout << A.getEntry(i,j) << " ";
@@ -32,6 +33,10 @@ int main() {
 	//	std::cout << "\n";
 	//}
 	
+	//std::cout << b.size() << "\n";
+	//for (size_t i = 0; i < b.size(); i++) {
+	//	std::cout << b[i] << "\n";
+	//}
 	//std::cout << Lap.vBound_Type[0] << "\n";
 	//std::cout << Lap.vBound_Type[1] << "\n";
 	//std::cout << Lap.vBound_Type[2] << "\n";

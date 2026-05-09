@@ -2,15 +2,22 @@
 Defined as straight lines between two points (x1,y1) and (x2,y2).
 The lines need to be horizontal or vertical.
 The points need to be ordered from bottom to top or left to right.
-Format: ( x1 y1; x2 y2; +/- ) boundaryName
--> the (-) or (+) indicates whether the boundary elements are located on a positive or negative increment perpendicular to the boundary line. There needs to be a space between the sign and closing ')'. Any thing other than (+) or (-) will give an error
+
+Format: ( x1 y1; x2 y2 ) boundaryName boundaryType 
+
+Types of boundaries:
+	> WestBoundary
+	> EastBoundary
+	> SouthBoundary
+	> NorthBoundary
+
 ----------------------------------
 
-( 0 0; 0 10; + ) Front
+( 0 0; 0 10 ) Front WestBoundary
 
-( 10 0; 10 10; - ) Back
+( 10 0; 10 10 ) Back EastBoundary
 
-( 0 10; 10 10; - ) Top
+( 0 10; 10 10 ) Top NorthBoundary
 
-( 0 0; 10 0; + ) Bottom
+( 0 0; 10 0 ) Bottom SouthBoundary
 

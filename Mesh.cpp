@@ -335,7 +335,7 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
     double x1, y1, x2, y2;
     std::string name;
     bool read = false;
-    std::string incr;
+    std::string type;
     // Add boundary identifiers
     while (Boundary_Input >> strInput) {
         if (strInput == "----------------------------------") 
@@ -349,10 +349,10 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
             x2 = std::stod(strInput);
             Boundary_Input >> strInput;
             y2 = std::stod(strInput);
-            Boundary_Input >> incr;
             Boundary_Input >> strInput;
             Boundary_Input >> name;
-            elems = findBoundaryElems(x1,y1,x2,y2,incr);
+            Boundary_Input >> type;
+            elems = findBoundaryElems(x1,y1,x2,y2,type);
             buildVxVyIds(x1, y1, x2, y2, name);
             for (size_t i=0; i<elems.size(); i++) { 
                 if (Identif[elems[i]][0] == "Interior")
@@ -395,21 +395,21 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
     }
 }
 
-std::vector<int> Mesh::findBoundaryElems(double x1, double y1, double x2, double y2, std::string incr) {
+std::vector<int> Mesh::findBoundaryElems(double x1, double y1, double x2, double y2, std::string type) {
     std::vector<int> i_bound, j_bound, elems;
     int k=0;
     bool stop = false;
     double dist1, dist2;
     // Case 1 -> vertical boundary
-    if (x1 == x2) {
+    if (type == "WestBoundary" || type == "EastBoundary") {
         dist1 = std::abs(x_coords[0]-x1);
         while (!stop) {
             k++;
             dist2 = std::abs(x_coords[k] - x1);
             if (k==N) { i_bound.push_back(k-1); stop = true; }
             if (dist2 > dist1) {
-                if (incr == "+") { i_bound.push_back(k - 1); }
-                if (incr == "-") { i_bound.push_back(k - 2); }
+                if (type == "WestBoundary") { i_bound.push_back(k - 1); }
+                if (type == "EastBoundary") { i_bound.push_back(k - 2); }
                 stop = true;
             }
             dist1 = dist2;
@@ -436,7 +436,7 @@ std::vector<int> Mesh::findBoundaryElems(double x1, double y1, double x2, double
         }   
     }
     // Case 2 -> horizontal boundary
-    if (y1 == y2) {
+    if (type == "SouthBoundary" || type == "NorthBoundary") {
         stop = false;
         k = 0;
         dist1 = std::abs(y_coords[0]-y1);
@@ -445,8 +445,8 @@ std::vector<int> Mesh::findBoundaryElems(double x1, double y1, double x2, double
             dist2 = std::abs(y_coords[k] - y1);
             if (k==M) { j_bound.push_back(k-1); stop=true; }
             if (dist2 > dist1) {
-                if (incr == "+") { j_bound.push_back(k-1); }
-                if (incr == "-") { j_bound.push_back(k-2); }
+                if (type == "SouthBoundary") { j_bound.push_back(k-1); }
+                if (type == "NorthBoundary") { j_bound.push_back(k-2); }
                 stop = true;
             }
             dist1 = dist2;

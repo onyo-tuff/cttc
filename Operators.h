@@ -24,9 +24,10 @@ private:
 	double aP, aE, aW, aN, aS, bP;
 	SparseMatrix A;
 	std::vector<double> b;
-	std::vector<double> vBound_Value;
-	std::vector<std::string> vBound_Type;
-	std::ifstream input{ "Physical_BoCos.txt" };
+	std::vector<double> vBoCo_Value;
+	std::vector<std::string> vBoCo_Type, vBound_Name, vBound_Type;
+	std::ifstream bocos_input{ "Physical_BoCos.txt" };
+	std::ifstream bound_input{ "Boundary_Input.txt" };
 	void getInputs();
 	std::string strInput;
 };
