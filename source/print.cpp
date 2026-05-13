@@ -1,9 +1,10 @@
-#include "print_vec.h"
+#include "print.h"
 
-void print_vec(Mesh* mesh, std::vector<std::vector<double>> x, std::string name) { 
+void print(Mesh* mesh, std::vector<std::vector<double>> x, std::string name) { 
     int N = mesh->N;
     int M = mesh->M;
     std::ofstream file;
+    //std::string directory  = "results/";
     file.open(name.c_str());
     file<<"# vtk DataFile Version 2.0"<<"\n";
     file<<name<<"\n";
@@ -26,15 +27,6 @@ void print_vec(Mesh* mesh, std::vector<std::vector<double>> x, std::string name)
     file<<0<<"\n";
     file<<"\n";
     file<<"CELL_DATA"<<"   "<<M*N<<"\n";
-    //file<<"VECTORS "<<name<<" double"<<"\n";
-    //file<<"\n";
-    //std::string id;
-    // .stk espera los nodos en un determinado orden, usar siempre este formato j, i
-    //for (int j = 0;j < M;i++) {
-    //    for (int j = 0;j < N;j++) {
-    //        file << mesh->getCenter(i,j)[0] << "   " << mesh->getCenter(i,j)[1] << "   " << "0.0" << "\n";
-    //    }
-    //}
     file<<"SCALARS x double"<<"\n";
     file<<"LOOKUP_TABLE default"<<"\n";
     file<<"\n";

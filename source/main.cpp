@@ -6,7 +6,7 @@
 #include "SparseMatrix.h"
 #include "Solver.h"
 #include "Operators.h"
-#include "print_vec.h"
+#include "print.h"
 
 int main() {
 	//Mesh mesh = new Mesh();
@@ -92,16 +92,10 @@ int main() {
 		j = n - i * M;
 		x2D[i][j] = x[n];
 	}
-	//std::ofstream file("DirichletNeumann.csv");
-	//for (int i = x2D.size() - 1; i >= 0; i--) {
-	//	for (size_t j = 0; j < x2D[i].size(); j++) {
-	//		file << x2D[i][j] << (j < x2D[i].size() - 1 ? "," : "\n");
-	//	}
-	//}
 
 	// Pasar a VTK
 	Mesh *mesh_ptr = &mesh;
-	print_vec(mesh_ptr, x2D, "test.vtk");
+	print(mesh_ptr, x2D, "results/test.vtk");
 
 
 

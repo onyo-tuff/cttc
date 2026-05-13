@@ -5,6 +5,6 @@
 #include <string>
 
 //void print_vec(Mesh* mesh, std::string name);
-void print_vec(Mesh* mesh, std::vector<std::vector<double>> x, std::string name);
+void print(Mesh* mesh, std::vector<std::vector<double>> x, std::string name);
 
 #endif

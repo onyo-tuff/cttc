@@ -26,8 +26,8 @@ private:
 	std::vector<double> b;
 	std::vector<double> vBoCo_Value, vBoCo_Value1;
 	std::vector<std::string> vBoCo_Type, vBound_Name, vBound_Type;
-	std::ifstream bocos_input{ "BoCos.txt" };
-	std::ifstream bound_input{ "Boundary_Input.txt" };
+	std::ifstream bocos_input{ "inputs/BoCos.txt" };
+	std::ifstream bound_input{ "inputs/Boundary_Input.txt" };
 	void getInputs();
 	std::string strInput;
 };

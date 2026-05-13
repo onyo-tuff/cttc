@@ -70,9 +70,9 @@ public:
 
 private:
 	// Members
-	std::ifstream input{ "Mesh_Input.txt" };
-	std::ifstream Boundary_Input{ "Boundary_Input.txt"};
-	std::ifstream Materials_Input{ "Materials_Input.txt"};
+	std::ifstream input{ "inputs/Mesh_Input.txt" };
+	std::ifstream Boundary_Input{ "inputs/Boundary_Input.txt"};
+	std::ifstream Materials_Input{ "inputs/Materials_Input.txt"};
 	std::string strInput;
 	double L, H, hx_min, hx_max1, hx_max2, hx_max3, hy_min, hy_max1, hy_max2, hy_max3, 
 		alpha_x1, alpha_x2, alpha_x3, alpha_y1, alpha_y2, alpha_y3, x_r, y_r, L_r, H_r;

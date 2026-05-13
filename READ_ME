@@ -1,3 +1,5 @@
+COMPILE APP IN THE PARENT DIRECTORY
+
 ////////////////////////////////Mesh_Input.txt////////////////////////////////////////////
 Mesh indexing:
 	i: 0->N-1 from left to right
