@@ -14,9 +14,9 @@ int main() {
 	//bool a;
 	std::cout << mesh.N_vol << "\n";
 	//a = mesh.hasIdentifier(n, "Obj_Bottom");
-	Laplacian Lap(mesh);
+	Diffusivity Lap(mesh);
 	//std::cout << mesh.MaterialK.size() << "\n";
-	std::cout << "laplacian ok" << "\n";
+	std::cout << "diffusivity ok" << "\n";
 
 
 	// Extraer A, b

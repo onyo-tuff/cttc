@@ -1,6 +1,6 @@
 #include "Operators.h"
 
-Laplacian::Laplacian(Mesh& mesh)
+Diffusivity::Diffusivity(Mesh& mesh)
 	: A(mesh.N_vol-mesh.N_obstacle), b(mesh.N_vol-mesh.N_obstacle)
 {
 	std::vector<double> xn;
@@ -57,52 +57,78 @@ Laplacian::Laplacian(Mesh& mesh)
 	}
 }
 
-void Laplacian::calc_boundary(Mesh& mesh, int n) {
+void Diffusivity::calc_boundary(Mesh& mesh, int n) {
 	std::vector<double> xn = mesh.getCenter(n);
 	double k = mesh.getK(n);
+	double calc;
 	for (size_t i = 0; i < vBound_Name.size(); i++) {
 		if (mesh.hasIdentifier(n,vBound_Name[i])) {
 			if (vBound_Type[i]=="WestBoundary") {
+				aW = 0;
 				if (vBoCo_Type[i]=="Dirichlet") {
-					aW = 0;
-					aP += -k*mesh.getS_w(n)/dist(xn,mesh.getWest(n));
-					bP += vBoCo_Value[i]*aP;
+					calc = -k*mesh.getS_w(n)/dist(xn,mesh.getWest(n));
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += k*vBoCo_Value[i]*mesh.getS_w(n);
+					bP += -k*vBoCo_Value[i]*mesh.getS_w(n);
+				else if (vBoCo_Type[i]=="Robins") {
+					calc = -k*mesh.getS_w(n)/(dist(xn,mesh.getWest(n))+vBoCo_Value1[i]);
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
+					i_Robins++;
+				}
 				else
 					std::cout<<"No boundary condition type detected for" << vBound_Name[i] << " boundary." << "\n";
 			}
 			if (vBound_Type[i]=="EastBoundary") {
+				aE = 0;
 				if (vBoCo_Type[i]=="Dirichlet") {
-					aE = 0;
-					aP += -k*mesh.getS_e(n)/dist(xn,mesh.getEast(n));
-					bP += vBoCo_Value[i]*aP;
+					calc = -k*mesh.getS_e(n)/dist(xn,mesh.getEast(n));
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
 					bP += -k*vBoCo_Value[i]*mesh.getS_e(n);
+				else if (vBoCo_Type[i]=="Robins") {
+					calc = -k*mesh.getS_e(n)/(dist(xn,mesh.getEast(n))+vBoCo_Value1[i]);
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
+				}
 				else
 					std::cout<<"No boundary condition type detected for" << vBound_Name[i] << " boundary." << "\n";
 			}
 			if (vBound_Type[i]=="SouthBoundary") {
+				aS = 0;
 				if (vBoCo_Type[i]=="Dirichlet") {
-					aS = 0;
-					aP += -k*mesh.getS_s(n)/dist(xn,mesh.getSouth(n));
-					bP += vBoCo_Value[i]*aP;
+					calc = -k*mesh.getS_s(n)/dist(xn,mesh.getSouth(n));
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += k*vBoCo_Value[i]*mesh.getS_s(n);
+					bP += -k*vBoCo_Value[i]*mesh.getS_s(n);
+			    else if (vBoCo_Type[i]=="Robins") {
+					calc = -k*mesh.getS_s(n)/(dist(xn,mesh.getSouth(n))+vBoCo_Value1[i]);
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
+				}
 				else
 					std::cout<<"No boundary condition type detected for" << vBound_Name[i] << " boundary." << "\n";
 			}
 			if (vBound_Type[i]=="NorthBoundary") {
+				aN = 0;
 				if (vBoCo_Type[i]=="Dirichlet") {
-					aN = 0;
-					aP += -k*mesh.getS_n(n)/dist(xn,mesh.getNorth(n));
-					bP += vBoCo_Value[i]*aP;
+					calc = -k*mesh.getS_n(n)/dist(xn,mesh.getNorth(n));
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += -k*vBoCo_Value[i]*mesh.getS_s(n);
+					bP += -k*vBoCo_Value[i]*mesh.getS_n(n);
+				else if (vBoCo_Type[i]=="Robins") {
+					calc = -k*mesh.getS_n(n)/(dist(xn,mesh.getNorth(n))+vBoCo_Value1[i]);
+					aP += calc;
+					bP += calc*vBoCo_Value[i];
+				}
 				else
 					std::cout<<"No boundary condition type detected for" << vBound_Name[i] << " boundary." << "\n";
 			}
@@ -110,8 +136,9 @@ void Laplacian::calc_boundary(Mesh& mesh, int n) {
 	}
 }
 
-void Laplacian::getInputs() {
+void Diffusivity::getInputs() {
 	bool read = false;
+	bool robins = false;
 	while (bocos_input>>strInput) {
 		//std::cout << "Reading bocos_input ok" << "\n";
 		if (strInput == "----------------------------------------------------")
@@ -123,8 +150,18 @@ void Laplacian::getInputs() {
 			vBoCo_Type.push_back(strInput);
 			bocos_input >> strInput;
 			vBoCo_Value.push_back(std::stod(strInput));
+			if (vBoCo_Type.back()=="Robins") {
+				bocos_input >> strInput;
+				vBoCo_Value1.push_back(std::stod(strInput));
+				if (!robins)
+					robins = true;
+			}
+			else 
+				vBoCo_Value1.push_back(0);
 		}
 	}
+	if (!robins)
+		std::vector<double>().swap(vBoCo_Value1);
 	read = false;
 	vBound_Type = vBound_Name;
 	while (bound_input>>strInput) {
@@ -139,15 +176,9 @@ void Laplacian::getInputs() {
 			}
 		}
 	}
-	for (size_t i = 0; i < 4; i++) {
-	std::cout << vBoCo_Type[i]<< " ";
-	std::cout << vBoCo_Value[i] << " ";
-	std::cout << vBound_Name[i] << " ";
-	std::cout << vBound_Type[i] << "\n";
-	}
 }
 
-double Laplacian::kWall(Mesh& mesh, int n, int p) { //Important!!!! n<p
+double Diffusivity::kWall(Mesh& mesh, int n, int p) { //Important!!!! n<p
 	std::vector<double> xn = mesh.getCenter(n);
 	std::vector<double> xp = mesh.getCenter(p);
 	std::vector<double> xwall;
@@ -167,7 +198,7 @@ double Laplacian::kWall(Mesh& mesh, int n, int p) { //Important!!!! n<p
 	return D/(dp/kp + dn/kn);
 }
 
-double Laplacian::dist(std::vector<double> a, std::vector<double> b) {
+double Diffusivity::dist(std::vector<double> a, std::vector<double> b) {
 	std::vector<double> r(a.size());
 	for (size_t i = 0; i < a.size(); i++) 
 		r[i] = a[i] - b[i];
