@@ -1,0 +1,9 @@
+----------- MESH SELECTION -------------
+Available meshes:
+	> NoObstacle: Rectangular mesh without obstacle
+	> Obstacle: Rectangulas mesh with rectangular obstacle
+	
+Note: Obtsacle mesh is designed for free-flow problems around a square cilinder. If you want to use it for other problems (such as heat transfer) use only with uniform discretization (see Mesh file)
+----------------------------------------
+
+Mesh Obstacle

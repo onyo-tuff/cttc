@@ -8,10 +8,26 @@
 #include "Operators.h"
 #include "print.h"
 
-int main() { // Transient Fourier
+int main() { // Stationary Fourier
 
 	// Meshing
 	Mesh mesh;
+	//bool read = false;
+	//std::string meshType, strInput;
+	//std::ifstream select_mesh{"inputs/SelectMesh"};
+	//while (select_mesh>>strInput) {
+	//	if (strInput=="----------------------------------------")
+	//		read = true;
+	//	if (strInput=="Mesh" && read==true)
+	//		select_mesh>>meshType;
+	//}
+	//if (meshType=="Obstacle") {
+	//	mesh = Mesh(1);
+	//}
+	//else if (meshType!="NoObstacle") {
+	//	std::cout << "Unrecognized mesh type." << "\n";
+	//	return 1;
+	//}
 	std::cout << "Number of control volumes: " << mesh.N_vol << "\n";
 	
 	// Compute operators
@@ -20,6 +36,23 @@ int main() { // Transient Fourier
 	SparseMatrix A;
 	b = Lap.OprB();
 	A = Lap.OprA();
+	
+	//for (int i = 0; i < A.getN(); i++) {
+	//	for (int j = 0; j < A.getN(); j++) {
+	//		if(A.getEntry(i,j)!=0)
+	//			std::cout  << "1 ";
+	//		else
+	//			std::cout << "0 ";
+	//	}
+	//	std::cout << "\n";
+	//}
+	
+	//std::cout << b.size() << "\n";
+	
+	//for (int j = 0; j < A.getN(); j++) {
+	//		std::cout << b[j] << "\n";
+	//}
+	
 	
 	// Solve
 	Solver sol(A, b);
@@ -32,7 +65,8 @@ int main() { // Transient Fourier
 
 	// Print to vtk
 	Mesh *mesh_ptr = &mesh;
-	print(mesh_ptr, sol.getSolution(), "T.vtk");
+	//print(mesh_ptr, sol.getSolution(), "T");
+	printVTR(mesh_ptr, sol.getSolution(), "T");
 
 	return 0;
 }

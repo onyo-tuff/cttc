@@ -1,21 +1,20 @@
-# vtk DataFile Version 2.0
-T
-ASCII
-
-DATASET RECTILINEAR_GRID
-DIMENSIONS   13   13   1
-
-X_COORDINATES   13   double
-0   0.0583333   0.116667   0.175   0.225   0.275   0.325   0.375   0.425   0.475   0.533333   0.591667   0.65   
-Y_COORDINATES   13   double
-0   0.0583333   0.116667   0.175   0.225   0.275   0.325   0.375   0.425   0.475   0.533333   0.591667   0.65   
-Z_COORDINATES   1   double
-0
-
-CELL_DATA   144
-SCALARS T double
-LOOKUP_TABLE default
-
+<?xml version="1.0"?>
+<VTKFile type="RectilinearGrid" version="0.1" byte_order="LittleEndian">
+<RectilinearGrid WholeExtent="0 12 0 12 0 0">
+<Piece Extent="0 12 0 12 0 0">
+<Coordinates>
+<DataArray type="Float64" Name="XCoordinates" format="ascii">
+0 0.0583333 0.116667 0.175 0.225 0.275 0.325 0.375 0.425 0.475 0.533333 0.591667 0.65 
+</DataArray>
+<DataArray type="Float64" Name="YCoordinates" format="ascii">
+0 0.0583333 0.116667 0.175 0.225 0.275 0.325 0.375 0.425 0.475 0.533333 0.591667 0.65 
+</DataArray>
+<DataArray type="Float64" Name="YCoordinates" format="ascii">
+0 
+</DataArray>
+</Coordinates>
+<CellData Scalars="x">
+<DataArray type="Float64" Name="T" format="ascii">
 -3.22564
 -3.20701
 -3.18929
@@ -55,72 +54,72 @@ LOOKUP_TABLE default
 -3.1754
 -3.15175
 -3.12203
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.12203
 -3.15175
 -3.1754
 -3.16618
 -3.14138
 -3.10962
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.10962
 -3.14138
 -3.16618
 -3.1614
 -3.13612
 -3.10368
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.10368
 -3.13612
 -3.1614
 -3.1614
 -3.13612
 -3.10368
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.10368
 -3.13612
 -3.1614
 -3.16618
 -3.14138
 -3.10962
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.10962
 -3.14138
 -3.16618
 -3.1754
 -3.15175
 -3.12203
-0 
-0 
-0 
-0 
-0 
-0 
+nan 
+nan 
+nan 
+nan 
+nan 
+nan 
 -3.12203
 -3.15175
 -3.1754
@@ -160,3 +159,8 @@ LOOKUP_TABLE default
 -3.18929
 -3.20701
 -3.22564
+</DataArray>
+</CellData>
+</Piece>
+</RectilinearGrid>
+</VTKFile>

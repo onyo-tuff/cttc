@@ -15,6 +15,17 @@ std::vector<int> Mesh::ij_given_n(int n) {
     return indx;
 }
 
+// Select mesh
+void Mesh::selectMesh() {
+	bool read = false;
+	while (select_mesh>>strInput) {
+		if (strInput=="----------------------------------------")
+			read = true;
+		if (strInput=="Mesh" && read==true)
+			select_mesh>>meshType;
+	}
+}
+
 // Read inputs
 void Mesh::getInputs() {
     while (std::getline(input, strInput))
@@ -153,15 +164,32 @@ std::vector<double> Mesh::Discretize1(double h_min, double h_max, double alpha, 
 
 // Default constructor
 Mesh::Mesh() {
+	selectMesh();
     getInputs();
-    Build();
-    buildArrays();
-    buildVxMesh();
-    buildVyMesh();
-    buildIdentifiers(false);
+    if (meshType=="NoObstacle") {
+    	Build();
+    	//std::cout << "Build ok" << "\n";
+    	hasObstacle = false;
+    	N_obstacle = 0;
+	}
+	else if (meshType=="Obstacle") {
+	    Build1();
+	    //std::cout << "Build1 ok" << "\n";
+	    hasObstacle = true;
+    }
+    else 
+		std::cout << "Warning: Unrecognized mesh type!" << "\n";
+	buildArrays();
+	//std::cout << "buildArrays ok" << "\n";
+	buildVxMesh();
+	//std::cout << "buildVx ok" << "\n";
+	buildVyMesh();
+	//std::cout << "buildVy ok" << "\n";
+	buildIdentifiers(hasObstacle);
+	//std::cout << "buildIds ok" << "\n";	
     N_vol = N*M;
-    N_obstacle = 0;
     AssignMaterials();
+    //std::cout << "Assign Materials ok" << "\n";
 }
 
 void Mesh::Build() {
@@ -353,6 +381,7 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
             Boundary_Input >> name;
             Boundary_Input >> type;
             elems = findBoundaryElems(x1,y1,x2,y2,type);
+            //std::cout << "Find boundary elems ok" << "\n";
             buildVxVyIds(x1, y1, x2, y2, name);
             for (size_t i=0; i<elems.size(); i++) { 
                 if (Identif[elems[i]][0] == "Interior")
@@ -364,13 +393,16 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
     }
     // Add obstacle identifiers
     if (yesObstacle) {
+    // Main mesh
     N_obstacle = 0;
     int n;
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
-           if (inObstacle(i,j)) {
-		N_obstacle++;
+        	nFillerBefore.push_back(N_obstacle);	
+            if (inObstacle(i,j)) {
+				N_obstacle++;
                 n = node_number(i,j);
+                //std::cout << n << "\n";
                 if (Identif[n][0] == "Interior")
                     Identif[n][0] = "Obstacle";
                 else
@@ -378,7 +410,7 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
            }
         }
     }
-    }
+    // Staggered x
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
             if (inObstacleVx(i,j)) {
@@ -386,12 +418,14 @@ void Mesh::buildIdentifiers(bool yesObstacle) {
             }
         }
     }
+    // Staggered y
     for (int i = 0; i < N; i++) {
         for (int j = 0; j < M; j++) {
             if (inObstacleVy(i,j)) {
                 VyMesh_Ids[i][j] = "Obstacle";
             }
         }
+    }
     }
 }
 

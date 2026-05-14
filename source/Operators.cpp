@@ -10,9 +10,7 @@ Diffusivity::Diffusivity(Mesh& mesh)
 	k = 0;
 	for (int n = 0; n < mesh.N_vol; n++) {
 		//std::cout << n << "\n";
-		if (mesh.hasIdentifier(n,"Obstacle"))
-			k++;
-		else {
+		if (!mesh.hasIdentifier(n,"Obstacle")) {
 		aP = 0;
 		aE = 0;
 		aW = 0;
@@ -37,15 +35,16 @@ Diffusivity::Diffusivity(Mesh& mesh)
 		// 
 		aP += -aE -aW -aN -aS;
 
+		k = mesh.getFillerBefore(n);
 		A.writeEntry(n-k,n-k,aP);
 		if (aW!=0)
-			A.writeEntry(n-k,n-M-k,aW);
+			A.writeEntry(n-k,n-M-mesh.getFillerBefore(n-M),aW);
 		if (aE!=0)
-			A.writeEntry(n-k,n+M-k,aE);
+			A.writeEntry(n-k,n+M-mesh.getFillerBefore(n+M),aE);
 		if (aS!=0)
-			A.writeEntry(n-k,n-1-k,aS);
+			A.writeEntry(n-k,n-1-mesh.getFillerBefore(n-1),aS);
 		if (aN!=0)
-			A.writeEntry(n-k,n+1-k,aN);
+			A.writeEntry(n-k,n+1-mesh.getFillerBefore(n+1),aN);
 		b[n-k] = bP;
 		}
 		//std::cout << "A,b entries ok" << "\n";

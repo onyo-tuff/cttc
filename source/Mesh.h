@@ -22,6 +22,7 @@ public:
 	// Primary mesh
 	 // - access with node number
 	double getK(int n) { return MaterialK[n]; }
+	int getFillerBefore(int n) { return nFillerBefore[n]; }
 	std::vector<double> getCenter(int n) { return Coords[n][0]; }
 	std::vector<double> getWest(int n) { return Coords[n][1]; }
 	std::vector<double> getEast(int n) { return Coords[n][2]; }
@@ -62,18 +63,21 @@ public:
     // Others
 	double getX(int i) { return x_coords[i]; }
     double getY(int j) { return y_coords[j]; }
+	bool inObstacle(int i, int j);
 
 	// Public members
 	int N, N1, N2, N3, M, M1, M2, M3, N_vol, N_obstacle;
+	bool hasObstacle;
 	
-	std::vector<std::vector<std::string>> Identif;
+	//std::vector<std::vector<std::string>> Identif;
 
 private:
 	// Members
+	std::ifstream select_mesh{"inputs/SelectMesh"};
 	std::ifstream input{ "inputs/Mesh" };
 	std::ifstream Boundary_Input{ "inputs/Boundary"};
 	std::ifstream Materials_Input{ "inputs/Materials"};
-	std::string strInput;
+	std::string strInput, meshType;
 	double L, H, hx_min, hx_max1, hx_max2, hx_max3, hy_min, hy_max1, hy_max2, hy_max3, 
 		alpha_x1, alpha_x2, alpha_x3, alpha_y1, alpha_y2, alpha_y3, x_r, y_r, L_r, H_r;
 	int n_nod;
@@ -85,7 +89,8 @@ private:
 	std::vector<std::vector<double>> Vols_n_Surfaces; // n_nod x 5
 	std::vector<std::vector<std::vector<double>>> Coords; // n_nod x 5 x 2
 	std::vector<double> MaterialK; // Gives material for each node
-	//std::vector<std::vector<std::string>> Identif;
+	std::vector<std::vector<std::string>> Identif;
+	std::vector<int> nFillerBefore;
 	// For Vx mesh
 	std::vector<std::vector<std::vector<double>>> Coords_Vx;
 	std::vector<std::vector<std::vector<double>>> SnV_Vx;
@@ -97,7 +102,7 @@ private:
 	
 
 	// Private Functions
-	bool inObstacle(int i, int j);
+	void selectMesh();
 	bool inObstacleVx(int i, int j);
 	bool inObstacleVy(int i, int j);
 	void getInputs();

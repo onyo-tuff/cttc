@@ -7,22 +7,30 @@ For Dirichlet:
 	scalarValue1 not needed
 	
 For Neumann: 
-	k*grad(T)·n = g
+	k*grad(u)·n = g
 	scalarValue = g
 	scalarValue1 not needed
 	
 For Robins:
-	T + a*k*grad(T)·n = g
+	u + a*k*grad(u)·n = g
 	scalarValue = g
 	scalarValue1 = a
 ----------------------------------------------------
 
-> Front Robins 33 -0.11111
+> Int1 Robins 60 0.109367992
 
-> Back Dirichlet 40
+> Int2 Robins 60 0.109367992
 
-> Top Neumann -60
+> Int3 Robins 60 0.109367992
 
-> Bottom Dirichlet 23
+> Int4 Robins 60 0.109367992
+
+> Ext1 Robins -12 0.03305785124
+
+> Ext2 Robins -12 0.03305785124
+
+> Ext3 Robins -12 0.03305785124
+
+> Ext4 Robins -12 0.03305785124
 
 

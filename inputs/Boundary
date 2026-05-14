@@ -10,14 +10,23 @@ Types of boundaries:
 	> EastBoundary
 	> SouthBoundary
 	> NorthBoundary
+	
+Important!! Cant use 'Interior' as a boundary name
 
 ----------------------------------
 
-( 0 0; 0 0.8 ) Front WestBoundary
+( 0.475 0.175; 0.475 0.475 ) Int1 WestBoundary
 
-( 1.1 0; 1.1 0.8 ) Back EastBoundary
+( 0.175 0.475; 0.475 0.475 ) Int2 SouthBoundary
 
-( 0 0.8; 1.1 0.8 ) Top NorthBoundary
+( 0.175 0.175; 0.175 0.475 ) Int3 EastBoundary
 
-( 0 0; 1.1 0 ) Bottom SouthBoundary
+( 0.175 0.175; 0.475 0.175 ) Int4 NorthBoundary
 
+( 0 0; 0.65 0 ) Ext1 SouthBoundary
+
+( 0 0; 0 0.65 ) Ext2 WestBoundary
+
+( 0.65 0; 0.65 0.65 ) Ext3 EastBoundary
+
+( 0 0.65; 0.65 0.65 ) Ext4 NorthBoundary
