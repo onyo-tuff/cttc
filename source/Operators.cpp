@@ -35,17 +35,31 @@ Diffusivity::Diffusivity(Mesh& mesh)
 		// 
 		aP += -aE -aW -aN -aS;
 
-		k = mesh.getFillerBefore(n);
-		A.writeEntry(n-k,n-k,aP);
-		if (aW!=0)
-			A.writeEntry(n-k,n-M-mesh.getFillerBefore(n-M),aW);
-		if (aE!=0)
-			A.writeEntry(n-k,n+M-mesh.getFillerBefore(n+M),aE);
-		if (aS!=0)
-			A.writeEntry(n-k,n-1-mesh.getFillerBefore(n-1),aS);
-		if (aN!=0)
-			A.writeEntry(n-k,n+1-mesh.getFillerBefore(n+1),aN);
-		b[n-k] = bP;
+		if(mesh.hasObstacle) {
+			k = mesh.getFillerBefore(n);
+			A.writeEntry(n-k,n-k,aP);
+			if (aW!=0)
+				A.writeEntry(n-k,n-M-mesh.getFillerBefore(n-M),aW);
+			if (aE!=0)
+				A.writeEntry(n-k,n+M-mesh.getFillerBefore(n+M),aE);
+			if (aS!=0)
+				A.writeEntry(n-k,n-1-mesh.getFillerBefore(n-1),aS);
+			if (aN!=0)
+				A.writeEntry(n-k,n+1-mesh.getFillerBefore(n+1),aN);
+			b[n-k] = bP;
+		}
+		else {
+			A.writeEntry(n,n,aP);
+			if (aW!=0)
+				A.writeEntry(n,n-M,aW);
+			if (aE!=0)
+				A.writeEntry(n,n+M,aE);
+			if (aS!=0)
+				A.writeEntry(n,n-1,aS);
+			if (aN!=0)
+				A.writeEntry(n,n+1,aN);
+			b[n] = bP;
+		}
 		}
 		//std::cout << "A,b entries ok" << "\n";
 	}
