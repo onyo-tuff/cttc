@@ -8,97 +8,31 @@
 #include "Operators.h"
 #include "print.h"
 
-int main() {
-	//Mesh mesh = new Mesh();
+int main() { // Transient Fourier
+
+	// Meshing
 	Mesh mesh;
-	//bool a;
-	std::cout << mesh.N_vol << "\n";
-	//a = mesh.hasIdentifier(n, "Obj_Bottom");
+	std::cout << "Number of control volumes: " << mesh.N_vol << "\n";
+	
+	// Compute operators
 	Diffusivity Lap(mesh);
-	//std::cout << mesh.MaterialK.size() << "\n";
-	std::cout << "diffusivity ok" << "\n";
-
-
-	// Extraer A, b
 	std::vector<double> b;
 	SparseMatrix A;
 	b = Lap.OprB();
 	A = Lap.OprA();
 	
-	//std::cout << "A = " << "\n";
-	//for (size_t i = 0; i < b.size(); i++) {
-	//	for (size_t j = 0; j < b.size(); j++) {
-	//		std::cout << A.getEntry(i,j) << " ";
-	//	}
-	//	std::cout << "\n";
-	//}
-	
-	//std::cout << b.size() << "\n";
-	//for (size_t i = 0; i < b.size(); i++) {
-	//	std::cout << b[i] << "\n";
-	//}
-	//std::cout << Lap.vBound_Type[0] << "\n";
-	//std::cout << Lap.vBound_Type[1] << "\n";
-	//std::cout << Lap.vBound_Type[2] << "\n";
-	//std::cout << Lap.vBound_Type[3] << "\n";
-	//std::cout << Lap.vBound_Type[4] << "\n";
-	//std::cout << Lap.vBound_Type[5] << "\n";
-	//std::cout << Lap.vBound_Type[6] << "\n";
-	//std::cout << Lap.vBound_Type[7] << "\n";
-
-	//SparseMatrix I(mesh.N_vol);
-	//std::cout << "b:" << "\n";
-	//for (int i = 0; i < b.size(); i++) {
-	//	I.writeEntry(i, i, 1);
-	//	std::cout << b[i] << ", ";
-	//	if (A.getEntry(i,i) < 0.000001)
-	//		std::cout << "zero in diagonal " << i << "!" << "\n";
-	//}
-	//std::cout << "\n";
-
-	// for (int i = 0; i < b.size(); i++) {
-	//	std::cout << "i = " << i << " : " << A.getEntry(i, i) << "\n";
-	//}
-	//std::cout << "\n";
-	//std::cout << "diag(A):" << "\n";
-	//for (int i = 0; i < b.size(); i++) {
-	//	std::cout << A.getEntry(i,i) << ", ";
-	//}
-	//std::cout << "\n";
-
-	// Solucionar
+	// Solve
 	Solver sol(A, b);
-	// for (int i=0; i<b.size(); i++)
-	//	std::cout << b[i] << "\n";
-
 	auto start = std::chrono::high_resolution_clock::now();
 	sol.solve();
 	auto end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsed = end - start;
 	std::cout << "Total program runtime: " << elapsed.count() << " seconds" << std::endl;
 	sol.printNumIterations();
-	//std::cout<<sol.solverType;
 
-	// Extraer solucion
-	std::vector<double> x;
-	x = sol.getSolution();
-	int i,j;
-	double N, M;
-	N = mesh.getN();
-	M = mesh.getM();
-	std::vector<std::vector<double>> x2D(N, std::vector<double>(M));
-	for (size_t n = 0; n < b.size(); n++) {
-		i = (int)(n / M);
-		j = n - i * M;
-		x2D[i][j] = x[n];
-	}
-
-	// Pasar a VTK
+	// Print to vtk
 	Mesh *mesh_ptr = &mesh;
-	print(mesh_ptr, x2D, "results/test.vtk");
-
-
-
+	print(mesh_ptr, sol.getSolution(), "T.vtk");
 
 	return 0;
 }

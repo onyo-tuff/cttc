@@ -71,9 +71,9 @@ void Diffusivity::calc_boundary(Mesh& mesh, int n) {
 					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += -k*vBoCo_Value[i]*mesh.getS_w(n);
+					bP += -vBoCo_Value[i]*mesh.getS_w(n);
 				else if (vBoCo_Type[i]=="Robins") {
-					calc = -k*mesh.getS_w(n)/(dist(xn,mesh.getWest(n))+vBoCo_Value1[i]);
+					calc = -mesh.getS_w(n)/(dist(xn,mesh.getWest(n))/k+vBoCo_Value1[i]);
 					aP += calc;
 					bP += calc*vBoCo_Value[i];
 					i_Robins++;
@@ -89,9 +89,9 @@ void Diffusivity::calc_boundary(Mesh& mesh, int n) {
 					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += -k*vBoCo_Value[i]*mesh.getS_e(n);
+					bP += -vBoCo_Value[i]*mesh.getS_e(n);
 				else if (vBoCo_Type[i]=="Robins") {
-					calc = -k*mesh.getS_e(n)/(dist(xn,mesh.getEast(n))+vBoCo_Value1[i]);
+					calc = -mesh.getS_e(n)/(dist(xn,mesh.getEast(n))/k+vBoCo_Value1[i]);
 					aP += calc;
 					bP += calc*vBoCo_Value[i];
 				}
@@ -106,9 +106,9 @@ void Diffusivity::calc_boundary(Mesh& mesh, int n) {
 					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += -k*vBoCo_Value[i]*mesh.getS_s(n);
+					bP += -vBoCo_Value[i]*mesh.getS_s(n);
 			    else if (vBoCo_Type[i]=="Robins") {
-					calc = -k*mesh.getS_s(n)/(dist(xn,mesh.getSouth(n))+vBoCo_Value1[i]);
+					calc = -mesh.getS_s(n)/(dist(xn,mesh.getSouth(n))/k+vBoCo_Value1[i]);
 					aP += calc;
 					bP += calc*vBoCo_Value[i];
 				}
@@ -123,9 +123,9 @@ void Diffusivity::calc_boundary(Mesh& mesh, int n) {
 					bP += calc*vBoCo_Value[i];
 				}
 				else if (vBoCo_Type[i]=="Neumann")
-					bP += -k*vBoCo_Value[i]*mesh.getS_n(n);
+					bP += -vBoCo_Value[i]*mesh.getS_n(n);
 				else if (vBoCo_Type[i]=="Robins") {
-					calc = -k*mesh.getS_n(n)/(dist(xn,mesh.getNorth(n))+vBoCo_Value1[i]);
+					calc = -mesh.getS_n(n)/(dist(xn,mesh.getNorth(n))/k+vBoCo_Value1[i]);
 					aP += calc;
 					bP += calc*vBoCo_Value[i];
 				}

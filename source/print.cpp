@@ -1,11 +1,23 @@
 #include "print.h"
 
-void print(Mesh* mesh, std::vector<std::vector<double>> x, std::string name) { 
+void print(Mesh* mesh, std::vector<double> x, std::string name) { 
+
+	// Write in i,j format
+	int i1;
+	int j1;
     int N = mesh->N;
     int M = mesh->M;
+    std::vector<std::vector<double>> x2D(N, std::vector<double>(M));
+    for (size_t n = 0; n < x.size(); n++) {
+		i1 = (int)(n / M);
+		j1 = n - i1 * M;
+		x2D[i1][j1] = x[n];
+	}
+    
+    // Write file
     std::ofstream file;
-    //std::string directory  = "results/";
-    file.open(name.c_str());
+    std::string directory  = "results/";
+    file.open(directory + name);
     file<<"# vtk DataFile Version 2.0"<<"\n";
     file<<name<<"\n";
     file<<"ASCII"<<"\n";
@@ -32,7 +44,7 @@ void print(Mesh* mesh, std::vector<std::vector<double>> x, std::string name) {
     file<<"\n";
     for (int j = 0;j < M;j++) {
         for (int i = 0;i < N;i++) {
-            file << x[i][j] << "\n";
+            file << x2D[i][j] << "\n";
         }
     }
     file.close();

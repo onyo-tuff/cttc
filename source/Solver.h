@@ -157,7 +157,7 @@ class Solver
 private:
 	SolverBase* solv;
 	std::string solverType, strInput, preconType;
-	std::ifstream input{ "inputs/Solver_Input.txt" };
+	std::ifstream input{ "inputs/Solver" };
 	// Extra inputs for specific solvers
 	double omega;
 
