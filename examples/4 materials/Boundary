@@ -1,0 +1,23 @@
+----------- BOUNDARIES -----------
+Defined as straight lines between two points (x1,y1) and (x2,y2).
+The lines need to be horizontal or vertical.
+The points need to be ordered from bottom to top or left to right.
+
+Format: ( x1 y1; x2 y2 ) boundaryName boundaryType 
+
+Types of boundaries:
+	> WestBoundary
+	> EastBoundary
+	> SouthBoundary
+	> NorthBoundary
+
+----------------------------------
+
+( 0 0; 0 0.8 ) Front WestBoundary
+
+( 1.1 0; 1.1 0.8 ) Back EastBoundary
+
+( 0 0.8; 1.1 0.8 ) Top NorthBoundary
+
+( 0 0; 1.1 0 ) Bottom SouthBoundary
+

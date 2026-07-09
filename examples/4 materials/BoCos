@@ -1,0 +1,28 @@
+----------- PHYSICAL BOUNDARY CONDITIONS -----------
+> boundaryName bocoType scalarValue scalarValue1
+
+For Dirichlet: 
+	u = g 
+	scalarValue = g
+	scalarValue1 not needed
+	
+For Neumann: 
+	k*grad(T)·n = g
+	scalarValue = g
+	scalarValue1 not needed
+	
+For Robins:
+	T + a*k*grad(T)·n = g
+	scalarValue = g
+	scalarValue1 = a
+----------------------------------------------------
+
+> Front Robins 33 -0.11111
+
+> Back Dirichlet 40
+
+> Top Neumann -60
+
+> Bottom Dirichlet 23
+
+

@@ -1,0 +1,88 @@
+----------- DOMAIN DEFINITION -----------
+i -> horizontal
+j -> vertical
+
+o---------o----------o-----------------o
+|         |          |                 |
+|         |          |                 | y3 (M3)
+|         |          |                 |
+o---------o----------o-----------------o
+|         |          |                 | 
+|         | obstacle |                 | y2 (M2)
+|         |          |                 |
+o---------o----------o-----------------o
+|         |          |                 |
+|         |          |                 | y1 (M1)
+|         |          |                 |
+o---------o----------o-----------------o
+  x1 (N1)   x2 (N2)        x3 (N3)
+
+x1: 1st horizontal interval
+x2: 2nd horizontal interval
+x3: 3rd horizontal interval
+y1: 1st vertical interval
+y2: 2nd vertical interval
+y3: 3rd vertical interval
+
+For the case without the obstacle, only one region is considered, 
+and only the parameters corresponding to x1 & y1 are used to discretize the domain.
+
+Domain Width 'L' (m):
+1.1
+Domain Height 'H' (m):
+0.8
+
+Coordinates of the bottom-left corner of the obstacle:
+x_r (m):
+0
+y_r (m):
+0
+Width of the obstacle 'L_r' (m):
+0
+Height of the obstacle 'H_r' (m):
+0
+
+----------- DISCRETIZATION PARAMETERS -----------
+
+Minimum horizontal element size 'hx_min' (m):
+0.011
+Maximum horizontal element size for x1 'hx_max1' (m):
+0.11
+Maximum horizontal element size for x2 'hx_max2' (m):
+2
+Maximum horizontal element size for x3 'hx_max3' (m):
+2
+Minimum vertical element size 'hy_min' (m):
+0.008
+Maximum vertical element size for y1 'hy_max1' (m):
+0.08
+Maximum vertical element size for y2 'hy_max2' (m):
+2
+Maximum vertical element size for y3 'hy_max3' (m):
+2
+
+Transition smoothness parameter along x1 'alpha_x1':
+0.2
+Transition smoothness parameter along x2 'alpha_x2':
+0
+Transition smoothness parameter along x3 'alpha_x3':
+0
+Transition smoothness parameter along y1 'alpha_y1':
+0.2
+Transition smoothness parameter along y2 'alpha_y2':
+0
+Transition smoothness parameter along y3 'alpha_y3':
+0
+-> To set uniform discretization for a desired region, set its corresponding alpha=0
+-> The h used will be the minimum of hx_min and hy_min, and will be reduced if necessary
+   to fit an integer amount of control volumes
+
+
+
+
+
+
+
+
+
+

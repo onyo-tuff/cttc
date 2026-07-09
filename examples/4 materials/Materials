@@ -1,0 +1,16 @@
+----------- ASSIGN MATERIAL PARAMETER K -----------
+Material parameters K are assigned in rectangular regions of the domain.
+If no value is assigned, the default is K=1.
+Format: ( x1 y1; x2 y2 ) K_value
+	> (x1 y1): Bottom-left corner of the rectangular region
+	> (x2 y2): Top-right corner of the rectangular region
+	> K_value: material parameter to be applied in this rectangular region.
+---------------------------------------------------
+
+( 0 0; 0.5 0.4 ) 170000
+
+( 0.5 0; 1.1 0.7 ) 140000
+
+( 0 0.4; 0.5 0.8 ) 200000
+
+( 0.5 0.7; 1.1 0.8 ) 140000
