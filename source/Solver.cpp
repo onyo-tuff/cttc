@@ -329,7 +329,7 @@ void GS_PCG::precondition() {
 }
 
 //---------- Context (selector class) ----------
-Solver::Solver(SparseMatrix in_A, std::vector<double> in_b) 
+Solver::Solver(SparseMatrix& in_A, std::vector<double>& in_b) 
 	: solv(nullptr)
 {
 	ReadInputs();

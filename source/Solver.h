@@ -14,7 +14,7 @@ class SolverBase
 {
 public:
 	// Constructor
-	SolverBase(SparseMatrix in_A, std::vector<double> in_b)
+	SolverBase(SparseMatrix& in_A, std::vector<double>& in_b)
 		: A {in_A}, b {in_b}
 	{
 		N = A.getN();
@@ -53,7 +53,7 @@ class Jacobi : public SolverBase
 {
 public:
 	// Constructor
-	Jacobi(SparseMatrix in_A, std::vector<double> in_b)
+	Jacobi(SparseMatrix& in_A, std::vector<double>& in_b)
 		: SolverBase{ in_A, in_b }
 	{
 	}
@@ -65,7 +65,7 @@ class GaussSeidel : public SolverBase
 {
 public:
 	// Constructor
-	GaussSeidel(SparseMatrix in_A, std::vector<double> in_b)
+	GaussSeidel(SparseMatrix& in_A, std::vector<double>& in_b)
 		: SolverBase{ in_A, in_b }
 	{
 	}
@@ -77,7 +77,7 @@ class SOR : public SolverBase
 {
 public:
 	// Constructor
-	SOR(SparseMatrix in_A, std::vector<double> in_b, double in_omega)
+	SOR(SparseMatrix& in_A, std::vector<double>& in_b, double in_omega)
 		: SolverBase{ in_A, in_b }, omega{ in_omega }
 	{
 	}
@@ -91,7 +91,7 @@ class CG : public SolverBase
 {
 public:
 	// Constructor
-	CG(SparseMatrix in_A, std::vector<double> in_b)
+	CG(SparseMatrix& in_A, std::vector<double>& in_b)
 		: SolverBase{ in_A, in_b }
 	{
 	}
@@ -108,7 +108,7 @@ class PCG : public SolverBase
 {
 public:
 	// Constructor
-	PCG(SparseMatrix in_A, std::vector<double> in_b)
+	PCG(SparseMatrix& in_A, std::vector<double>& in_b)
 		: SolverBase{ in_A, in_b }
 	{
 	}
@@ -124,7 +124,7 @@ class DiagPCG : public PCG
 {
 public:
 	//Constructor
-	DiagPCG(SparseMatrix in_A, std::vector<double> in_b)
+	DiagPCG(SparseMatrix& in_A, std::vector<double>& in_b)
 		: PCG{ in_A, in_b }
 	{
 		buildDiag();
@@ -140,7 +140,7 @@ class GS_PCG : public PCG
 {
 public:
 	//Constructor
-	GS_PCG(SparseMatrix in_A, std::vector<double> in_b)
+	GS_PCG(SparseMatrix& in_A, std::vector<double>& in_b)
 		: PCG{ in_A, in_b }
 	{
 	}
@@ -162,7 +162,7 @@ private:
 	double omega;
 
 public:
-	Solver(SparseMatrix in_A, std::vector<double> in_b);
+	Solver(SparseMatrix& in_A, std::vector<double>& in_b);
 	void ReadInputs();
 	void solve() {
 		solv->solve();
