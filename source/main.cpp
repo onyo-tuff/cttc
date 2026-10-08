@@ -8,26 +8,11 @@
 #include "Operators.h"
 #include "print.h"
 
+/*
 int main() { // Stationary Fourier
 
 	// Meshing
 	Mesh mesh;
-	//bool read = false;
-	//std::string meshType, strInput;
-	//std::ifstream select_mesh{"inputs/SelectMesh"};
-	//while (select_mesh>>strInput) {
-	//	if (strInput=="----------------------------------------")
-	//		read = true;
-	//	if (strInput=="Mesh" && read==true)
-	//		select_mesh>>meshType;
-	//}
-	//if (meshType=="Obstacle") {
-	//	mesh = Mesh(1);
-	//}
-	//else if (meshType!="NoObstacle") {
-	//	std::cout << "Unrecognized mesh type." << "\n";
-	//	return 1;
-	//}
 	std::cout << "Number of control volumes: " << mesh.N_vol << "\n";
 	
 	// Compute operators
@@ -36,23 +21,6 @@ int main() { // Stationary Fourier
 	SparseMatrix A;
 	b = Lap.OprB();
 	A = Lap.OprA();
-	
-	//for (int i = 0; i < A.getN(); i++) {
-	//	for (int j = 0; j < A.getN(); j++) {
-	//		if(A.getEntry(i,j)!=0)
-	//			std::cout  << "1 ";
-	//		else
-	//			std::cout << "0 ";
-	//	}
-	//	std::cout << "\n";
-	//}
-	
-	//std::cout << b.size() << "\n";
-	
-	//for (int j = 0; j < A.getN(); j++) {
-	//		std::cout << b[j] << "\n";
-	//}
-	
 	
 	// Solve
 	Solver sol(A, b);
@@ -65,8 +33,65 @@ int main() { // Stationary Fourier
 
 	// Print to vtk
 	Mesh *mesh_ptr = &mesh;
-	//print(mesh_ptr, sol.getSolution(), "T");
 	printVTR(mesh_ptr, sol.getSolution(), "T");
 
 	return 0;
 }
+*/
+
+void initialField(std::vector<double> T_0); 
+int main() { // Fourier Transitorio 
+	// Meshing
+	Mesh mesh;
+	Mesh *mesh_ptr = &mesh;
+	std::cout << "Number of control volumes: " << mesh.N_vol << "\n";
+
+	// Generate initial field
+	std::vector<double> T_n(mesh.N_vol);
+	initialField(T_n);
+
+	// Compute diffusivity operator
+	Diffusivity Lap(mesh);
+
+	// Time loop
+	int k = 0;
+	double t_fin = 1;
+	double dt = t_fin/10000; 
+	std::vector<double> T_n1(mesh.N_vol);
+	for (double t = 0; t <= 2*dt; t+=dt) {
+		k++;
+		// Compute next time step
+		std::vector<double> diffT = Lap.applyOp(T_n);
+		for (int i = 0; i < T_n1.size(); i++) {
+			T_n1[i] = T_n[i] + dt*diffT[i];
+		}
+		// Test
+		std::cout << "diffT(100) = " << diffT[50] << "\n";
+		// Print solutions
+		if (k%1000==0)
+			printVTR(mesh_ptr, T_n1, std::to_string(k));
+		// Update n
+		T_n = T_n1;
+		// Test time loop
+		//std::cout << "t = " << t << "\n";
+	}
+}
+
+// Function to read input uniform T_0 field
+void initialField(std::vector<double> T_0) {
+	std::ifstream input{ "inputs/T0" };
+	std::string strInput;
+	double T;
+	while (input>>strInput) {
+		if (strInput == "----------------------------------------") { 
+			input>>strInput;
+			T = std::stod(strInput);
+			// Test
+			//std::cout << "T_0 = " << T << "\n";
+		}
+	}
+	for (int i = 0; i < T_0.size(); i++) 
+		T_0[i] = T;
+}
+
+

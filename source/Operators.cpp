@@ -218,6 +218,19 @@ double Diffusivity::dist(std::vector<double> a, std::vector<double> b) {
 	return std::sqrt(std::inner_product(r.begin(), r.end(), r.begin(), 0.0));
 }
 
+std::vector<double> Diffusivity::applyOp(std::vector<double>& x) {
+	// y = A*x - b
+	double sum;
+	std::vector<double> y(x.size());
+	for (int i = 0; i < x.size(); i++) {
+		sum = 0;
+		for (int j = 0; j < x.size(); j++) {
+			sum += A.getEntry(i,j)*x[j];
+		}
+		y[i] = sum - b[i];
+	}
+	return y;
+}
 
 
 

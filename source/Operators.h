@@ -15,6 +15,7 @@ public:
 	Diffusivity(Mesh& mesh);
 	SparseMatrix OprA() { return A; }
 	std::vector<double> OprB() { return b; }
+	std::vector<double> applyOp(std::vector<double>& x);
 
 private:
 	double kWall(Mesh& mesh, int n, int p);
