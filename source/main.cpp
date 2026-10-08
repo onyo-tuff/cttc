@@ -55,10 +55,11 @@ int main() { // Fourier Transitorio
 
 	// Time loop
 	int k = 0;
-	double t_fin = 1;
-	double dt = t_fin/10000; 
+	double t_fin = 0.1;
+	double dt = 1e-6; // Cumple CFL 
+	double diffSum = 0;
 	std::vector<double> T_n1(mesh.N_vol);
-	for (double t = 0; t <= 2*dt; t+=dt) {
+	for (double t = 0; t <= t_fin; t+=dt) {
 		k++;
 		// Compute next time step
 		std::vector<double> diffT = Lap.applyOp(T_n);
@@ -66,7 +67,11 @@ int main() { // Fourier Transitorio
 			T_n1[i] = T_n[i] + dt*diffT[i];
 		}
 		// Test
-		std::cout << "diffT(100) = " << diffT[50] << "\n";
+		diffSum = 0;
+		for (int i = 0; i < diffT.size(); i++)
+			diffSum+=diffT[i];
+		std::cout << "diffSum = " << diffSum << "  |  ";
+		std::cout << "t = " << t+dt << "\n";
 		// Print solutions
 		if (k%1000==0)
 			printVTR(mesh_ptr, T_n1, std::to_string(k));
@@ -74,6 +79,9 @@ int main() { // Fourier Transitorio
 		T_n = T_n1;
 		// Test time loop
 		//std::cout << "t = " << t << "\n";
+		// Break if stability
+    if (std::abs(diffSum) < 1e-6)
+			break;
 	}
 }
 

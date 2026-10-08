@@ -45,7 +45,7 @@ Height of the obstacle 'H_r' (m):
 ----------- DISCRETIZATION PARAMETERS -----------
 
 Minimum horizontal element size 'hx_min' (m):
-0.11
+0.05
 Maximum horizontal element size for x1 'hx_max1' (m):
 0.11
 Maximum horizontal element size for x2 'hx_max2' (m):
@@ -53,7 +53,7 @@ Maximum horizontal element size for x2 'hx_max2' (m):
 Maximum horizontal element size for x3 'hx_max3' (m):
 2
 Minimum vertical element size 'hy_min' (m):
-0.08
+0.04
 Maximum vertical element size for y1 'hy_max1' (m):
 0.08
 Maximum vertical element size for y2 'hy_max2' (m):
