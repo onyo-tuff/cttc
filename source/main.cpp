@@ -7,6 +7,7 @@
 #include "Solver.h"
 #include "Operators.h"
 #include "print.h"
+#include "TransientFourier.h"
 
 /*
 int main() { // Stationary Fourier
@@ -39,20 +40,25 @@ int main() { // Stationary Fourier
 }
 */
 
-void initialField(std::vector<double> T_0); 
-int main() { // Fourier Transitorio 
+void initialField(std::vector<double>& T_0); 
+int main() { // Transient Fourier  
 	// Meshing
 	Mesh mesh;
-	Mesh *mesh_ptr = &mesh;
 	std::cout << "Number of control volumes: " << mesh.N_vol << "\n";
 
 	// Generate initial field
-	std::vector<double> T_n(mesh.N_vol);
-	initialField(T_n);
+	//std::vector<double> T_n(mesh.N_vol);
+	//initialField(T_n);
 
 	// Compute diffusivity operator
 	Diffusivity Lap(mesh);
+	std::cout << "ok \n";
 
+	// Apply transient algorithm	
+	TransientFourier transient(mesh);
+	transient.execute(mesh,Lap);
+
+	/*
 	// Time loop
 	int k = 0;
 	double t_fin = 0.1;
@@ -83,10 +89,11 @@ int main() { // Fourier Transitorio
     if (std::abs(diffSum) < 1e-6)
 			break;
 	}
+	*/
 }
 
 // Function to read input uniform T_0 field
-void initialField(std::vector<double> T_0) {
+void initialField(std::vector<double>& T_0) {
 	std::ifstream input{ "inputs/T0" };
 	std::string strInput;
 	double T;

@@ -84,21 +84,21 @@ void print(Mesh* mesh, std::vector<double> x, std::string name) {
     file.close();
 }
 
-void printVTR(Mesh* mesh, std::vector<double> x, std::string name) {
+void printVTR(Mesh& mesh, std::vector<double> x, std::string name) {
 	// Write in i,j format
 	int i1;
 	int j1;
-    int N = mesh->N;
-    int M = mesh->M;
+    int N = mesh.N;
+    int M = mesh.M;
     
     // Add obstacle filler to x
-    std::vector<double> x1(mesh->N_vol);
+    std::vector<double> x1(mesh.N_vol);
     int n = 0;
     int n_noFiller = 0;
-    if (mesh->hasObstacle) {
+    if (mesh.hasObstacle) {
     	for (int i = 0; i < N; i++) {
     		for (int j = 0; j < M; j++) {
-				if (mesh->inObstacle(i,j))
+				if (mesh.inObstacle(i,j))
 					x1[n] = 0;
 				else {
 					x1[n] = x[n_noFiller];
@@ -122,13 +122,13 @@ void printVTR(Mesh* mesh, std::vector<double> x, std::string name) {
 	file << "<Coordinates>\n";
 	file << "<DataArray type=\"Float64\" " << "Name=\"XCoordinates\" " << "format=\"ascii\">\n";
     for(int i=0;i<=N;i++){
-    	file << mesh->getX(i) << " ";
+    	file << mesh.getX(i) << " ";
     }
     file<<"\n";
     file<<"</DataArray>"<<"\n";
 	file << "<DataArray type=\"Float64\" " << "Name=\"YCoordinates\" " << "format=\"ascii\">\n";
 	for(int j=0;j<=M;j++){
-        file << mesh->getY(j) << " ";
+        file << mesh.getY(j) << " ";
     }
     file<<"\n";
     file<<"</DataArray>"<<"\n";
@@ -140,8 +140,8 @@ void printVTR(Mesh* mesh, std::vector<double> x, std::string name) {
 	file << "<DataArray type=\"Float64\" " << "Name=\"" << name << "\" " << "format=\"ascii\">\n";
 	    for (int j = 0;j < M;j++) {
         for (int i = 0;i < N;i++) {
-        	if(!mesh->inObstacle(i,j)) {
-        		n = mesh->node_number(i,j);
+        	if(!mesh.inObstacle(i,j)) {
+        		n = mesh.node_number(i,j);
             	file << x[n] << "\n";
             	n++;
         	}

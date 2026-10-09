@@ -1,0 +1,22 @@
+---------- TRANSIENT CONTROL -----------
+File to write input parameters to control transient simulations
+
+Input parameters:
+	t_0 -> starting time (seconds)
+	t_fin -> finish time (seconds)
+	dt_print -> for every dt_print seconds simulated (starting
+	            at t_0) the results will be printed into a .vtr file
+	         -> independently of this parameter, the results 
+					    for the last timestep will always be printed
+	         -> warning: avoid very small values of dt_time that
+					    may be smaller than the dt of the time discretization
+					 -> if only the last timestep is to be printed, 
+					    set dt_print > (t_fin - t_0)
+----------------------------------------
+
+t_0 0
+
+t_fin 0.05
+
+dt_print 0.001
+
