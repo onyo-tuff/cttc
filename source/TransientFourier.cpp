@@ -3,20 +3,29 @@
 TransientFourier::TransientFourier(Mesh& mesh)
 	: N{mesh.N_vol}, T_n(N), T_n1(N)
 {
-	initialField();
 	readTimeInput();
-	// Temporarily hardcoded
-	dt = 1e-6;
+	initialField();
+	CFL cfl;
+	cfl.cflDiff(mesh);
+	dt = cfl.getDt();
 }
 
 void TransientFourier::execute(Mesh& mesh, Diffusivity& Diff) {
-	sumTime = 0;
+	sumTime = 0; // Used to print every dt_print (approx)
 	for ( t = 0; t < t_fin ; t += dt ) {
 		modDiff = 0;
 		// Find solution for next timestep
 		std::vector<double> diffT = Diff.applyOp(T_n);
-		for (int i = 0; i < N; i++) 
-			T_n1[i] = T_n[i] + dt*diffT[i];
+		if (IntegrationSch=="Euler") {
+			for (int i = 0; i < N; i++) 
+				T_n1[i] = T_n[i] + dt*diffT[i]; 
+		} else if(IntegrationSch=="AB2") {
+			std::vector<double> diffT0 = Diff.applyOp(T_n0);
+			for (int i = 0; i < N; i++) 
+				T_n1[i] = T_n[i] + 1.5*dt*diffT[i] - 0.5*dt*diffT0[i]; 
+		} else {
+			std::cout << "Error! Invalid integration scheme chosen. \n"; 
+		}
 		// Print ?
 		sumTime += dt;
 		if ( sumTime > dt_print ) {
@@ -25,6 +34,8 @@ void TransientFourier::execute(Mesh& mesh, Diffusivity& Diff) {
 			sumTime = 0;
 		}
 		// Update
+		if(IntegrationSch=="AB2") 
+			T_n0 = T_n;
 		T_n = T_n1;
 		// Print terminal stuff
 		for (int i = 0; i < N; i++) 
@@ -52,6 +63,8 @@ void TransientFourier::initialField() {
 	}
 	for (int i = 0; i < N; i++) 
 		T_n[i] = T;
+	if(IntegrationSch=="AB2") 
+		T_n0 = T_n;
 }
 
 void TransientFourier::readTimeInput() {
@@ -73,6 +86,8 @@ void TransientFourier::readTimeInput() {
 			input>>strInput;
 			dt_print = std::stod(strInput);
 		}
+		if (strInput == "IntegrationScheme" && read == true) 
+			input>>IntegrationSch;
 	}
 }
 

@@ -12,11 +12,14 @@ Input parameters:
 					    may be smaller than the dt of the time discretization
 					 -> if only the last timestep is to be printed, 
 					    set dt_print > (t_fin - t_0)
+	IntegrationScheme -> options: Euler, AB2
 ----------------------------------------
 
 t_0 0
 
-t_fin 0.05
+t_fin 1.5
 
-dt_print 0.001
+dt_print 0.1
+
+IntegrationScheme AB2
 

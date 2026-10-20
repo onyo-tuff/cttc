@@ -7,6 +7,8 @@
 #include "Solver.h"
 #include "Operators.h"
 #include "print.h"
+#include "TransientFourier.h"
+
 
 int main() { // Stationary Fourier
 
@@ -32,7 +34,8 @@ int main() { // Stationary Fourier
 
 	// Print to vtk
 	Mesh *mesh_ptr = &mesh;
-	print(mesh_ptr, sol.getSolution(), "T.vtk");
+	printVTR(mesh_ptr, sol.getSolution(), "T");
 
 	return 0;
 }
+

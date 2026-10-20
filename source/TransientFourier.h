@@ -9,6 +9,7 @@
 #include <numeric>
 #include "Operators.h"
 #include "print.h"
+#include "CFL.h"
 
 class TransientFourier {
 public:
@@ -22,7 +23,10 @@ private:
 	//Private elements
 	int maxSteps, N;
 	double t, t_0, t_fin, dt, dt_print, sumTime, modDiff;
-	std::vector<double> T_n, T_n1;
+	std::vector<double> T_n, T_n1, T_n0;
+	// T_n1 == T_n+1
+	// T_n0 == T_n-1
+	std::string IntegrationSch;
 
 	//Private functions
 	void initialField(); 
