@@ -62,7 +62,7 @@ public:
 	std::string getId_VyMesh(int i, int j) { return VyMesh_Ids[i][j]; }
     // Others
 	double getX(int i) { return x_coords[i]; }
-    double getY(int j) { return y_coords[j]; }
+	double getY(int j) { return y_coords[j]; }
 	bool inObstacle(int i, int j);
 
 	// Public members
